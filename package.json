@@ -2,9 +2,9 @@
   "name": "linked-line-service",
   "version": "1.0.0",
   "description": "",
-  "main": "app/routes.js",
+  "main": "app",
   "scripts": {
-    "dev": "nodemon ./index.js"
+    "dev": "nodemon ./server.js"
   },
   "keywords": [],
   "author": "",
