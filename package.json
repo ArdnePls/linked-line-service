@@ -1,8 +1,8 @@
 {
-  "name": "Linked line service",
+  "name": "linked-line-service",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app/routes.js",
   "scripts": {
     "dev": "nodemon ./index.js"
   },
