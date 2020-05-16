@@ -1,7 +1,11 @@
+const fileHandler = require('./controllers/fileHandler');
+
 exports.init = app => {
 
-  app.get("/", (req, res) => res.status(200).send("Hello World!"));
+  app.get("/health_check", (req, res) => res.status(200).send("Hello World!"));
 
-  app.post("/", (req, res) => res.status(200).send("Hello World!"));
+  app.get("/", [], fileHandler.readFile);
+
+  app.post("/", [], fileHandler.writeNewLine);
 
 }
