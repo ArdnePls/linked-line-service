@@ -8,4 +8,6 @@ exports.init = app => {
 
   app.post("/", [], fileHandler.writeNewLine);
 
+  app.put("/", [], fileHandler.replaceLine);
+
 }
