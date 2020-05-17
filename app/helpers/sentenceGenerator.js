@@ -2,6 +2,7 @@ const fs = require('fs');
 const util = require('util');
 const crypto = require('crypto');
 const { FILE_URL } = require('../config/environment');
+const logger = require('../logger');
 
 const calculateNonce = (hashLine) => {
     let nonceSucceeded = false;
@@ -16,7 +17,8 @@ const calculateNonce = (hashLine) => {
         } else {
             nonce ++;
         }
-    }
+    };
+    logger.info(`Obtained nonce: ${nonce}`);
     return nonce;
 };
 
@@ -51,15 +53,21 @@ const regenerateDataWhenAlterFile = (sentencesToPersist, sentencesToModificate) 
         const sentenceToPersist = sentence.split(',')[1];
         sentencesToPersist.push(getSentenceFromLastLine(sentencesToPersist[sentencesToPersist.length - 1], sentenceToPersist));
     });
+    logger.info(`Modificated file: ${sentencesToPersist.join('\n')}\n`);
     return (`${sentencesToPersist.join('\n')}\n`);
 };
 
 const getNewGeneratedData = async (newSentence, index) => {
     const sentences = await obtainAllLines();
+    logger.info(`Sentences on file: ${util.inspect(sentences, false, null)}`);
     const positionToUpdate = index - 1;
     const sentencesToPersist = sentences.slice(0, positionToUpdate);
+    logger.info(`Sentences to not modificate: ${sentencesToPersist}`);
+    logger.info(`Sentence to update: ${sentences[positionToUpdate]} with message: ${newSentence}`);
     sentencesToPersist.push(getSentenceFromLastLine(sentences[positionToUpdate - 1], newSentence));
+    logger.info(`Sentences to persist updated: ${sentencesToPersist}`);
     const sentencesToModificate = sentences.slice(index, sentences.length);
+    logger.info(`Sentences to update hashes and persist messages: ${sentencesToModificate}`);
     return regenerateDataWhenAlterFile(sentencesToPersist, sentencesToModificate);
 };
 

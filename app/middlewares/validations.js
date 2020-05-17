@@ -1,10 +1,11 @@
 const { validationResult } = require('express-validator');
+const logger = require('../logger');
 
 exports.validate = {
   validations: (req, res, next) => {
     try {
       const result = validationResult(req);
-      console.log(`Errors is empty: ${result.isEmpty()}`);
+      logger.info(`Errors is empty: ${result.isEmpty()}`);
       if (result.isEmpty()) {
         next();
       } else {
