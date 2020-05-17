@@ -1,4 +1,6 @@
 const fileHandler = require('./controllers/fileHandler');
+const { bodyIsComplete, indexIsCorrect } = require('./middlewares/updateFileValidations');
+const { validate } = require('./middlewares/validations');
 
 exports.init = app => {
 
@@ -8,6 +10,6 @@ exports.init = app => {
 
   app.post("/", [], fileHandler.writeNewLine);
 
-  app.put("/", [], fileHandler.replaceLine);
+  app.put("/", [bodyIsComplete, validate.validations, indexIsCorrect], fileHandler.replaceLine);
 
 }
