@@ -36,9 +36,11 @@ expect.extend({
     }
 });
 
-beforeEach(done => {
-    fs.writeFile(FILE_URL, '', () => done());
-  });
+afterEach(done => fs.writeFile(FILE_URL, '', () => done()));
+
+beforeAll(done => fs.writeFile(FILE_URL, '', () => done()))
+
+afterAll(() => fs.unlinkSync(FILE_URL, () => done()))
 
 const requireAllTestFiles = pathToSearch => {
   fs.readdirSync(pathToSearch).forEach(file => {
