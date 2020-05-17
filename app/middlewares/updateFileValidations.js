@@ -1,7 +1,7 @@
 const { check } = require('express-validator');
 const { obtainAllLines } = require('../helpers/sentenceGenerator');
 
-exports.bodyIsComplete = [
+exports.bodyUpdateIsComplete = [
   check('index')
     .exists()
     .withMessage('Index field is empty.'),

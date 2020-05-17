@@ -1,5 +1,6 @@
 const fileHandler = require('./controllers/fileHandler');
-const { bodyIsComplete, indexIsCorrect } = require('./middlewares/updateFileValidations');
+const { bodyUpdateIsComplete, indexIsCorrect } = require('./middlewares/updateFileValidations');
+const { bodyPostIsComplete } = require('./middlewares/createLineValidations');
 const { validate } = require('./middlewares/validations');
 
 exports.init = app => {
@@ -8,8 +9,8 @@ exports.init = app => {
 
   app.get("/", [], fileHandler.readFile);
 
-  app.post("/", [], fileHandler.writeNewLine);
+  app.post("/", [bodyPostIsComplete, validate.validations], fileHandler.writeNewLine);
 
-  app.put("/", [bodyIsComplete, validate.validations, indexIsCorrect], fileHandler.replaceLine);
+  app.put("/", [bodyUpdateIsComplete, validate.validations, indexIsCorrect], fileHandler.replaceLine);
 
 }
