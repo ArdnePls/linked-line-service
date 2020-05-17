@@ -45,11 +45,9 @@ afterAll(() => fs.unlinkSync(FILE_URL, () => done()))
 const requireAllTestFiles = pathToSearch => {
   fs.readdirSync(pathToSearch).forEach(file => {
     if (fs.lstatSync(`${pathToSearch}/${file}`).isDirectory()) {
-      requireAllTestFiles(`${pathToSearch}/${file}`);
+        requireAllTestFiles(`${pathToSearch}/${file}`);
     } else {
-      if(!file.includes('sample.txt')) {
         require(`${pathToSearch}/${file}`);
-      }
     }
   });
 };
